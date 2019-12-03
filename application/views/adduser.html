@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://kit.fontawesome.com/12b188f415.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Add User</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__header-column">
+        <a href="./index.html"><h1 class="header__title">Home</h1></a>
+      </div>
+      <div class="header__header-column">
+        <span class="header__icon">
+          <a href="./adduser.html"><i class="fas fa-user-plus"></i></a>
+        </span>
+        <span class="header__icon">
+          <a href="./invest.html"><i class="fas fa-coins"></i></a>
+        </span>
+        <span class="header__icon">
+          <a href="./query.html"><i class="fas fa-search"></i></a>
+        </span>
+      </div>
+    </header>
+    <div class="container"><h2>Add User</h2></div>
+    <div class="ab">
+      <form action="/user" method="post">
+        <div class="form-group">
+          <label for="exampleInputEmail1">User Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter User Name"
+            name="name"
+          />
+        </div>
+
+        <div class="btn-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
