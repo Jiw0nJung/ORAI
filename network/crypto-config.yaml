@@ -11,7 +11,7 @@ OrdererOrgs:
   # Orderer
   # ---------------------------------------------------------------------------
   - Name: Orderer
-    Domain: example.com
+    Domain: orai.com
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
@@ -22,7 +22,7 @@ OrdererOrgs:
 # ---------------------------------------------------------------------------
 PeerOrgs:
   - Name: Org1
-    Domain: org1.reits.com
+    Domain: org1.user.com
 
     Template:
       Count: 1
@@ -31,7 +31,7 @@ PeerOrgs:
       Count: 1
 
   - Name: Org2
-    Domain: org2.reits.com
+    Domain: org2.insurance.com
 
     Template:
       Count: 1
@@ -40,10 +40,10 @@ PeerOrgs:
       Count: 1
 
   - Name: Org3
-    Domain: org3.investor.com
+    Domain: org3.manufacturer.com
 
     Template:
-      Count: 2
+      Count: 1
 
     Users:
-      Count: 5
+      Count: 1

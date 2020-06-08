@@ -16,14 +16,14 @@
     "mychannel": {
       "orderers": ["orderer.example.com"],
       "peers": {
-        "peer0.org1.reits.com": {}
+        "peer0.org1.user.com": {}
       }
     }
   },
   "organizations": {
     "Org1": {
       "mspid": "Org1MSP",
-      "peers": ["peer0.org1.reits.com"],
+      "peers": ["peer0.org1.user.com"],
       "certificateAuthorities": ["ca.example.com"]
     }
   },
@@ -33,7 +33,7 @@
     }
   },
   "peers": {
-    "peer0.org1.reits.com": {
+    "peer0.org1.user.com": {
       "url": "grpc://localhost:7051"
     }
   },
