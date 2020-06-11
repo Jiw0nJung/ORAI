@@ -14,11 +14,12 @@ services:
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.orai.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.user.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/35a5baed69f53b780caf174ef38e1b923b2745f62c4aac5dbf91e1bb3acd93b7_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/35a5baed69f53b780caf174ef38e1b923b2745f62c4aac5dbf91e1bb3acd93b7_sk
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.user.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/35a5baed69f53b780caf174ef38e1b923b2745f62c4aac5dbf91e1bb3acd93b7_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/org1.user.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.orai.com
@@ -35,6 +36,10 @@ services:
       - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/msp/orderer/tls/ca.crt]
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
     command: orderer
     ports:
@@ -62,6 +67,10 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     ports:
@@ -70,6 +79,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./crypto-config/peerOrganizations/org1.user.com/peers/peer0.org1.user.com/msp:/etc/hyperledger/msp/peer
+      - ./crypto-config/peerOrganizations/org1.user.com/peers/peer0.org1.user.com/tls:/etc/hyperledger/msp/peer/tls
       - ./crypto-config/peerOrganizations/org1.user.com/users:/etc/hyperledger/msp/users
       - ./config:/etc/hyperledger/configtx
     depends_on:
@@ -94,6 +104,10 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
 
     command: peer node start
@@ -104,6 +118,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./crypto-config/peerOrganizations/org2.insurance.com/peers/peer0.org2.insurance.com/msp:/etc/hyperledger/msp/peer
+      - ./crypto-config/peerOrganizations/org2.insurance.com/peers/peer0.org2.insurance.com/tls:/etc/hyperledger/msp/peer/tls
       - ./crypto-config/peerOrganizations/org2.insurance.com/users:/etc/hyperledger/msp/users
       - ./config:/etc/hyperledger/configtx
     depends_on:
@@ -128,6 +143,10 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
 
     command: peer node start
@@ -138,6 +157,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./crypto-config/peerOrganizations/org3.manufacturer.com/peers/peer0.org3.manufacturer.com/msp:/etc/hyperledger/msp/peer
+      - ./crypto-config/peerOrganizations/org3.manufacturer.com/peers/peer0.org3.manufacturer.com/tls:/etc/hyperledger/msp/peer/tls
       - ./crypto-config/peerOrganizations/org3.manufacturer.com/users:/etc/hyperledger/msp/users
       - ./config:/etc/hyperledger/configtx
     depends_on:
@@ -195,11 +215,15 @@ services:
       - CORE_PEER_LOCALMSPID=Org1MSP
       - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.user.com/users/Admin@org1.user.com/msp
       - CORE_CHAINCODE_KEEPALIVE=10
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.user.com/peers/peer0.org1.user.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.user.com/peers/peer0.org1.user.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.user.com/peers/peer0.org1.user.com/tls/ca.crt
     working_dir: /etc/hyperledger/configtx
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../contract/:/opt/gopath/src/github.com/
+      - ../contract/:/opt/gopath/src/github.com/
       - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ./config:/etc/hyperledger/configtx
     networks:
